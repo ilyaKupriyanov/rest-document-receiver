@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ValidList<E> extends ArrayList<E> {
 
-    @Valid
     private List<E> list;
 
     public ValidList() {

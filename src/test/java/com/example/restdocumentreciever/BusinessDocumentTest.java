@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import static junit.framework.Assert.assertNotNull;
 
-public class DocumentTest {
+public class BusinessDocumentTest {
     private static String createPersonUrl;
     private static String updatePersonUrl;
     private static RestTemplate restTemplate;

@@ -1,6 +1,6 @@
 package com.example.restdocumentreciever.controller;
 
-import com.example.restdocumentreciever.model.Document;
+import com.example.restdocumentreciever.model.BusinessDocument;
 import com.example.restdocumentreciever.model.ResultResponse;
 import com.example.restdocumentreciever.service.DocumentService;
 import com.example.restdocumentreciever.utils.UtilClass;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,20 +36,27 @@ public class DocumentController {
     }
 
     @PostMapping(value = "/createDocument", consumes = "application/json", produces = "application/json")
-    public ResultResponse createDocument(@Valid @RequestBody Document document, Errors errors) {
+    public ResultResponse createDocument(@Valid @RequestBody BusinessDocument businessDocument, Errors errors) {
         //ResponseEntity<Void>
-        //documentService.saveUpdateDocument(document);
+        //documentService.saveUpdateDocument(businessDocument);
         List<String> errorMessagesList = new ArrayList<>();
         ResultResponse resultResponse;
         if (errors.hasErrors()) {
             for (ObjectError objectError : errors.getAllErrors()) {
                 String message = objectError.getDefaultMessage();
+                if (businessDocument.getProducts().length != 0) {
+                    if (objectError.getCodes()[0].contains("products")) {
+                        String name = utilClass.getNameOfProductWithError(objectError, businessDocument.getProducts());
+                        message = message.concat(name);
+                    }
+                }
                 errorMessagesList.add(message);
             }
         }
-        List<String> productsErrorList = utilClass.validateProductList(document.getProducts());
-        if (!productsErrorList.isEmpty()) errorMessagesList.addAll(productsErrorList);
 
+//        List<String> productsErrorList = utilClass.validateProductList(businessDocument.getProductsWrapper().getProducts());
+//        if (!productsErrorList.isEmpty()) errorMessagesList.addAll(productsErrorList);
+//
         if (!errorMessagesList.isEmpty()) {
             resultResponse = new ResultResponse("VALIDATION_ERROR", errorMessagesList);
         } else {

@@ -1,11 +1,11 @@
 package com.example.restdocumentreciever.service;
 
-import com.example.restdocumentreciever.model.Document;
+import com.example.restdocumentreciever.model.BusinessDocument;
 
 public interface DocumentService {
 
-   Document saveUpdateDocument(Document document);
-   Document findDocumentById(Integer id);
+   BusinessDocument saveUpdateDocument(BusinessDocument businessDocument);
+   BusinessDocument findDocumentById(Integer id);
 
 
 }

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>rest-document-reciever</artifactId>
+    <artifactId>rest-businessDocument-reciever</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rest-document-reciever</name>
+    <name>rest-businessDocument-reciever</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
