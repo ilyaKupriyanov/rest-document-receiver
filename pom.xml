@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>rest-businessDocument-reciever</artifactId>
+    <artifactId>rest-document-receiver</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rest-businessDocument-reciever</name>
-    <description>Demo project for Spring Boot</description>
+    <name>rest-document-receiver</name>
+    <description>Service for receiving business document</description>
 
     <properties>
         <java.version>1.8</java.version>

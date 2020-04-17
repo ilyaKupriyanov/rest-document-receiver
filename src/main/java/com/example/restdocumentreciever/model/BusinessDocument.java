@@ -27,8 +27,5 @@ public class BusinessDocument {
 
     @Valid
     private Product[] products;
-    //private ValidList<Product> products;
-    //ProductsWrapper productsWrapper;
-
 
 }

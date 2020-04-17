@@ -34,12 +34,14 @@ public class UtilClass {
     }
 
     private int parseNumberOfProduct(String text) {
-        //String text = "Size.businessDocument.products[1].code";
-        Pattern p = Pattern.compile("\\b\\w*\\d+\\w*,?\\b");
-        Matcher m = p.matcher(text);
-        return Integer.parseInt(text.substring(m.start(), m.end()));
+        String value="";
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isDigit(text.charAt(i))) {
+                value = String.valueOf(text.charAt(i));
+            }
+        }
+        return Integer.parseInt(value);
     }
-
 
 }
 

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,8 +36,7 @@ public class DocumentController {
 
     @PostMapping(value = "/createDocument", consumes = "application/json", produces = "application/json")
     public ResultResponse createDocument(@Valid @RequestBody BusinessDocument businessDocument, Errors errors) {
-        //ResponseEntity<Void>
-        //documentService.saveUpdateDocument(businessDocument);
+
         List<String> errorMessagesList = new ArrayList<>();
         ResultResponse resultResponse;
         if (errors.hasErrors()) {
@@ -53,14 +51,10 @@ public class DocumentController {
                 errorMessagesList.add(message);
             }
         }
-
-//        List<String> productsErrorList = utilClass.validateProductList(businessDocument.getProductsWrapper().getProducts());
-//        if (!productsErrorList.isEmpty()) errorMessagesList.addAll(productsErrorList);
-//
-        if (!errorMessagesList.isEmpty()) {
-            resultResponse = new ResultResponse("VALIDATION_ERROR", errorMessagesList);
-        } else {
+        if (errorMessagesList.isEmpty()) {
             resultResponse = new ResultResponse("SUCCESS", null);
+        } else {
+            resultResponse = new ResultResponse("VALIDATION_ERROR", errorMessagesList);
         }
         return resultResponse;
     }

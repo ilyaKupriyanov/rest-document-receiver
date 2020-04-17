@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
@@ -19,7 +18,6 @@ import static junit.framework.Assert.assertNotNull;
 
 public class BusinessDocumentTest {
     private static String createPersonUrl;
-    private static String updatePersonUrl;
     private static RestTemplate restTemplate;
     private static HttpHeaders headers;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -27,7 +25,6 @@ public class BusinessDocumentTest {
     @BeforeClass
     public static void runBeforeAllTestMethods() throws JSONException, JsonProcessingException {
         createPersonUrl = "http://localhost:8000/createDocument";
-        updatePersonUrl = "http://localhost:8000/updateDocument";
         restTemplate = new RestTemplate();
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -35,7 +32,7 @@ public class BusinessDocumentTest {
 
     @Test
     public void givenDataIsJson_whenDataIsPostedByPostForObject_thenResponseBodyIsNotNull() throws IOException {
-        String requestBody = IOUtils.toString(getClass().getResourceAsStream("/request.json"), "UTF-8");
+        String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/request.json"), "UTF-8");
         HttpEntity<String> request = new HttpEntity<String>(requestBody, headers);
         String personResultAsJsonStr = restTemplate.postForObject(createPersonUrl, request, String.class);
         JsonNode root = objectMapper.readTree(personResultAsJsonStr);
@@ -44,5 +41,4 @@ public class BusinessDocumentTest {
         assertNotNull(root);
         assertNotNull(root.path("name").asText());
     }
-
 }
