@@ -39,6 +39,4 @@ public class ValidList<E> extends ArrayList<E> {
         return list.isEmpty();
     }
 
-    // Other list methods ...
-
 }
