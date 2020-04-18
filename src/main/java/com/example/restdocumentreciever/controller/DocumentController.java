@@ -3,8 +3,6 @@ package com.example.restdocumentreciever.controller;
 import com.example.restdocumentreciever.model.BusinessDocument;
 import com.example.restdocumentreciever.model.ResultResponse;
 import com.example.restdocumentreciever.utils.ValidationErrorsUtils;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +14,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
-@NoArgsConstructor
 public class DocumentController {
 
-    @Autowired
     private ValidationErrorsUtils validationErrorsUtils;
+
+    @Autowired
+    public DocumentController(ValidationErrorsUtils validationErrorsUtils) {
+        this.validationErrorsUtils = validationErrorsUtils;
+    }
 
     @GetMapping("/")
     public String home() {
