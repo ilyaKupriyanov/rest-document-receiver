@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class DocumentController {
         ResultResponse resultResponse;
         List<String> errorMessagesList = validationErrorsUtils.checkDocumentForValidationErrors(businessDocument,errors);
         if (errorMessagesList.isEmpty()) {
-            resultResponse = new ResultResponse("SUCCESS", null);
+            resultResponse = new ResultResponse("SUCCESS", Collections.emptyList());
         } else {
             resultResponse = new ResultResponse("VALIDATION_ERROR", errorMessagesList);
         }
