@@ -1,6 +1,4 @@
-package com.example.restdocumentreciever.threadSafe;
-
-import java.util.List;
+package com.example.threadSafe;
 
 public class Future<V> {
 
