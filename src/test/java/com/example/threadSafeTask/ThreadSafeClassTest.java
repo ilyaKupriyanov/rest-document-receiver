@@ -1,10 +1,12 @@
-package com.example.threadSafe;
+package com.example.threadSafeTask;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Map;
+
 import static junit.framework.TestCase.assertEquals;
 
 public class ThreadSafeClassTest {
@@ -55,7 +57,7 @@ public class ThreadSafeClassTest {
     }
 
     @Test
-    public void testCombinedBehaviorInTestMethod() {
+    public void testBehaviorWithCache() {
         ThreadSafeClass threadSafeClass = new ThreadSafeClass();
 
         Future<Double> future1 = threadSafeClass.compute(10, intToDoubleFunc);
@@ -71,6 +73,12 @@ public class ThreadSafeClassTest {
         assertEquals(threadSafeClass.getCacheAccessCount(), 1);
         Future<Month> future6 = threadSafeClass.compute(localDate1, localDateToMonthFunc);
         assertEquals(threadSafeClass.getCacheAccessCount(), 2);
+
+        //testing getting a copy of the cache
+        Map copy = threadSafeClass.getCache();
+        assertEquals(copy.size(), threadSafeClass.getCache().size());
+        copy.put(1, 1);
+        assertEquals(copy.size(), threadSafeClass.getCache().size()+1);
     }
 
 }

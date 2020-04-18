@@ -1,4 +1,4 @@
-package com.example.threadSafe;
+package com.example.threadSafeTask;
 
 public class Future<V> {
 

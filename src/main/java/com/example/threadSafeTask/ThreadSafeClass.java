@@ -1,5 +1,7 @@
-package com.example.threadSafe;
+package com.example.threadSafeTask;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ThreadSafeClass<K,V> {
@@ -24,8 +26,8 @@ public class ThreadSafeClass<K,V> {
         return new Future<>(v);
     }
 
-    public ConcurrentHashMap<K, V> getCache() {
-        return cache;
+    public Map<K, V> getCache() {
+        return new HashMap<>(cache);
     }
 
     public int getCacheAccessCount() {
