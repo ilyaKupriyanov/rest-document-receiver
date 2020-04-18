@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
@@ -17,12 +17,12 @@ public class BusinessDocument {
 
     private int id;
 
-    @NotBlank(message = "Поле seller не должно быть пустым")
-    @Size(min = 9, max = 9, message = "В поле seller должно быть 9 символов")
+    @NotNull(message = "Поле seller отсутствует")
+    @Size(min = 9, max = 9, message = "Поле seller должно содержать 9 символов")
     private String seller;
 
-    @NotBlank(message = "Поле customer не должно быть пустым")
-    @Size(min = 9, max = 9, message = "В поле customer должно быть 9 символов" )
+    @NotNull(message = "Поле customer отсутствует")
+    @Size(min = 9, max = 9, message = "Поле customer должно содержать 9 символов" )
     private String customer;
 
     @Valid

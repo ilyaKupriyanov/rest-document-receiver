@@ -16,7 +16,6 @@ public class Product {
     @NotBlank(message = "Поле name не должно быть пустым для товара ")
     private String name;
 
-    @NotBlank(message = "Поле code не должно быть пустым для товара ")
     @Size(min = 13, max = 13, message = "Поле code должно содержать 13 символов для товара ")
     private String code;
 
