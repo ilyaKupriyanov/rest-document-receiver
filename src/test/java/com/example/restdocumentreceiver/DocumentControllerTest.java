@@ -89,7 +89,7 @@ public class DocumentControllerTest {
     }
 
     @Test
-    @DisplayName("Сценарий с некорректными products")
+    @DisplayName("Сценарий с некорректными элементами products")
     public void testNotCorrectProducts() throws Exception {
         String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_not_corr_products.json"), "UTF-8");
         mockMvc.perform(
@@ -104,7 +104,7 @@ public class DocumentControllerTest {
     }
 
     @Test
-    @DisplayName("Сценарий с пустым списком product")
+    @DisplayName("Сценарий с пустым списком products")
     public void testEmptyProducts() throws Exception {
         String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_empty_products.json"), "UTF-8");
         mockMvc.perform(

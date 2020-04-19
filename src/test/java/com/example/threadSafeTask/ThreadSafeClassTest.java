@@ -74,7 +74,6 @@ public class ThreadSafeClassTest {
         Future<Month> future6 = threadSafeClass.compute(localDate1, localDateToMonthFunc);
         assertEquals(threadSafeClass.getCacheAccessCount(), 2);
 
-        //тестирование получения копии кеша
         Map copy = threadSafeClass.getCache();
         assertEquals(copy.size(), threadSafeClass.getCache().size());
         copy.put(1, 1);
