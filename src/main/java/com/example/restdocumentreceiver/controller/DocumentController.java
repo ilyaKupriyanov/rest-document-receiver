@@ -1,9 +1,9 @@
-package com.example.restdocumentreciever.controller;
+package com.example.restdocumentreceiver.controller;
 
-import com.example.restdocumentreciever.model.BusinessDocument;
-import com.example.restdocumentreciever.model.ResultResponse;
-import com.example.restdocumentreciever.service.DocumentService;
-import com.example.restdocumentreciever.utils.ValidationErrorsUtils;
+import com.example.restdocumentreceiver.model.BusinessDocument;
+import com.example.restdocumentreceiver.model.ResultResponse;
+import com.example.restdocumentreceiver.service.DocumentService;
+import com.example.restdocumentreceiver.utils.ValidationErrorsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;

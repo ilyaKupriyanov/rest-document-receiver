@@ -1,6 +1,6 @@
-package com.example.restdocumentreciever.service;
+package com.example.restdocumentreceiver.service;
 
-import com.example.restdocumentreciever.model.BusinessDocument;
+import com.example.restdocumentreceiver.model.BusinessDocument;
 
 public interface DocumentService {
 

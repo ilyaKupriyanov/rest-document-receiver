@@ -1,4 +1,4 @@
-package com.example.restdocumentreciever;
+package com.example.restdocumentreceiver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.example.restdocumentreciever;
+package com.example.restdocumentreceiver;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;

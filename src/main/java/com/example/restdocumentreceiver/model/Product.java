@@ -1,4 +1,4 @@
-package com.example.restdocumentreciever.model;
+package com.example.restdocumentreceiver.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
-package com.example.restdocumentreciever.utils;
+package com.example.restdocumentreceiver.utils;
 
-import com.example.restdocumentreciever.model.BusinessDocument;
-import com.example.restdocumentreciever.model.Product;
+import com.example.restdocumentreceiver.model.BusinessDocument;
+import com.example.restdocumentreceiver.model.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
