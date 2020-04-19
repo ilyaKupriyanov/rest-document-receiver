@@ -38,7 +38,7 @@ public class DocumentController {
         List<String> errorMessagesList = validationErrorsUtils.checkDocumentForValidationErrors(businessDocument,errors);
         if (errorMessagesList.isEmpty()) {
             resultResponse = new ResultResponse("SUCCESS", Collections.emptyList());
-            documentService.saveUpdateDocument(businessDocument);
+            documentService.saveDocument(businessDocument);
         } else {
             Collections.sort(errorMessagesList);
             resultResponse = new ResultResponse("VALIDATION_ERROR", errorMessagesList);

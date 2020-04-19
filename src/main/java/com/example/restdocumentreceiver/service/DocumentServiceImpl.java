@@ -13,7 +13,7 @@ public class DocumentServiceImpl implements DocumentService {
     private int id = 0;
 
     @Override
-    public BusinessDocument saveUpdateDocument(BusinessDocument businessDocument) {
+    public BusinessDocument saveDocument(BusinessDocument businessDocument) {
         storage.put(this.id, businessDocument);
         businessDocument.setId(id++);
         return businessDocument;

@@ -12,8 +12,8 @@ import java.util.List;
 @Component
 public class ValidationErrorsUtils {
 
-    private static final String PRODUCTS_NAME_EMPTY_MESSAGE = "Поле name не должно быть пустым для товара №";
-    private static final String PRODUCTS_NOT_CORRECT_MESSAGE = "Поле code должно содержать 13 символов для товара";
+    private static final String PRODUCT_NAME_EMPTY_MESSAGE = "Поле name не должно быть пустым для товара №";
+    private static final String PRODUCT_CODE_NOT_CORRECT_MESSAGE = "Поле code должно содержать 13 символов для товара";
 
     public List<String> checkDocumentForValidationErrors(BusinessDocument businessDocument, Errors errors) {
         List<String> errorMessagesList = new ArrayList<>();
@@ -25,7 +25,7 @@ public class ValidationErrorsUtils {
                     boolean errorIsAdded = false;
                     String message = objectError.getDefaultMessage();
                     if (businessDocument.getProducts().length != 0) {
-                        if (objectError.getDefaultMessage().equals(PRODUCTS_NOT_CORRECT_MESSAGE)) {
+                        if (objectError.getDefaultMessage().equals(PRODUCT_CODE_NOT_CORRECT_MESSAGE)) {
                             String name = getNameOfProductWithError(objectError, businessDocument.getProducts());
                             if (name.isEmpty()) {
                                 int number = getNumberOfProductWithError(objectError);
@@ -37,7 +37,7 @@ public class ValidationErrorsUtils {
                             }
                             errorIsAdded = true;
                         }
-                        if (objectError.getDefaultMessage().equals(PRODUCTS_NAME_EMPTY_MESSAGE)) {
+                        if (objectError.getDefaultMessage().equals(PRODUCT_NAME_EMPTY_MESSAGE)) {
                             int number = getNumberOfProductWithError(objectError);
                             message = message.concat(String.valueOf(++number));
                         }

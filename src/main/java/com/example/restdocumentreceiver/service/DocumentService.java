@@ -4,6 +4,6 @@ import com.example.restdocumentreceiver.model.BusinessDocument;
 
 public interface DocumentService {
 
-   BusinessDocument saveUpdateDocument(BusinessDocument businessDocument);
+   BusinessDocument saveDocument(BusinessDocument businessDocument);
 
 }

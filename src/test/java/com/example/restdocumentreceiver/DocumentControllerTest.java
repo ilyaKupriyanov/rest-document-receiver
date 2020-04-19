@@ -71,7 +71,6 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.errorMessages.size()", is(2)))
                 .andExpect(jsonPath("$.errorMessages.[0]", is(CUSTOMER_NOT_CORRECT_MESSAGE)))
                 .andExpect(jsonPath("$.errorMessages.[1]", is(SELLER_NOT_CORRECT_MESSAGE)));
-
     }
 
     @Test
