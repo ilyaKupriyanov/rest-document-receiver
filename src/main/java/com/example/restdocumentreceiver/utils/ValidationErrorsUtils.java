@@ -22,7 +22,6 @@ public class ValidationErrorsUtils {
         } else {
             if (errors.hasErrors()) {
                 for (ObjectError objectError : errors.getAllErrors()) {
-                    boolean errorIsAdded = false;
                     String message = objectError.getDefaultMessage();
                     if (businessDocument.getProducts().length != 0) {
                         if (objectError.getDefaultMessage().equals(PRODUCT_CODE_NOT_CORRECT_MESSAGE)) {
@@ -30,19 +29,16 @@ public class ValidationErrorsUtils {
                             if (name.isEmpty()) {
                                 int number = getNumberOfProductWithError(objectError);
                                 message = message.concat(" №").concat(String.valueOf(++number));
-                                errorMessagesList.add(message);
                             } else {
                                 message = message.concat(" ").concat(name);
-                                errorMessagesList.add(message);
                             }
-                            errorIsAdded = true;
                         }
                         if (objectError.getDefaultMessage().equals(PRODUCT_NAME_EMPTY_MESSAGE)) {
                             int number = getNumberOfProductWithError(objectError);
                             message = message.concat(String.valueOf(++number));
                         }
                     }
-                    if (!errorIsAdded) errorMessagesList.add(message);
+                    errorMessagesList.add(message);
                 }
             }
             if (businessDocument.getProducts().length == 0) {
