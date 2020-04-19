@@ -13,10 +13,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class Product {
 
-    @NotBlank(message = "Поле name не должно быть пустым")
+    @NotBlank(message = "Поле name не должно быть пустым для товара №")
     private String name;
 
-    @Size(min = 13, max = 13, message = "Поле code должно содержать 13 символов для товара ")
+    @Size(min = 13, max = 13, message = "Поле code должно содержать 13 символов для товара")
     private String code;
 
 }

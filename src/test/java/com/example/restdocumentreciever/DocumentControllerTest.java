@@ -30,11 +30,12 @@ public class DocumentControllerTest {
     private static final String BASE_URL = "/createDocument";
     private static final String SELLER_NOT_CORRECT_MESSAGE = "Поле seller должно содержать 9 символов";
     private static final String CUSTOMER_NOT_CORRECT_MESSAGE = "Поле customer должно содержать 9 символов";
-    private static final String SELLER_DONT_EXIST_MESSAGE = "Поле seller отсутствует";
-    private static final String CUSTOMER_DONT_EXIST_MESSAGE = "Поле customer отсутствует";
-    private static final String MILK_NOT_CORRECT_MESSAGE = "Поле code должно содержать 13 символов для товара milk";
-    private static final String WATER_NOT_CORRECT_MESSAGE = "Поле code должно содержать 13 символов для товара water";
+    private static final String MILK_NOT_CORRECT_CODE_MESSAGE = "Поле code должно содержать 13 символов для товара milk";
+    private static final String WATER_NOT_CORRECT_CODE_MESSAGE = "Поле code должно содержать 13 символов для товара water";
+    private static final String PRODUCT_NOT_CORRECT_CODE_MESSAGE = "Поле code должно содержать 13 символов для товара";
+    private static final String PRODUCT_NOT_CORRECT_NAME_MESSAGE = "Поле name не должно быть пустым для товара №";
     private static final String PRODUCTS_EMPTY_MESSAGE = "Список products пуст";
+    private static final String BAD_DOC_MESSAGE = "Некорректная структура документа";
 
     @Autowired
     private WebApplicationContext context;
@@ -89,21 +90,6 @@ public class DocumentControllerTest {
     }
 
     @Test
-    @DisplayName("Сценарий с отсутствием полей seller и customer")
-    public void testWithoutSellerAndCustomer() throws Exception {
-        String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_without_seller_and_customer.json"), "UTF-8");
-        mockMvc.perform(
-                post(BASE_URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
-                .andExpect(jsonPath("$.errorMessages.size()", is(2)))
-                .andExpect(jsonPath("$.errorMessages[0]", is(CUSTOMER_DONT_EXIST_MESSAGE)))
-                .andExpect(jsonPath("$.errorMessages[1]", is(SELLER_DONT_EXIST_MESSAGE)));
-    }
-
-    @Test
     @DisplayName("Сценарий с некорректными products")
     public void testNotCorrectProducts() throws Exception {
         String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_not_corr_products.json"), "UTF-8");
@@ -114,12 +100,12 @@ public class DocumentControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
                 .andExpect(jsonPath("$.errorMessages.size()", is(2)))
-                .andExpect(jsonPath("$.errorMessages[0]", is(MILK_NOT_CORRECT_MESSAGE)))
-                .andExpect(jsonPath("$.errorMessages[1]", is(WATER_NOT_CORRECT_MESSAGE)));
+                .andExpect(jsonPath("$.errorMessages[0]", is(MILK_NOT_CORRECT_CODE_MESSAGE)))
+                .andExpect(jsonPath("$.errorMessages[1]", is(WATER_NOT_CORRECT_CODE_MESSAGE)));
     }
 
     @Test
-    @DisplayName("Сценарий с отсутствием списка products")
+    @DisplayName("Сценарий с пустым списком product")
     public void testEmptyProducts() throws Exception {
         String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_empty_products.json"), "UTF-8");
         mockMvc.perform(
@@ -130,6 +116,101 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
                 .andExpect(jsonPath("$.errorMessages.size()", is(1)))
                 .andExpect(jsonPath("$.errorMessages[0]", is(PRODUCTS_EMPTY_MESSAGE)));
+    }
+
+    @Test
+    @DisplayName("Сценарий, когда один элемент в products имеет пустое имя")
+    public void testProductsWhenOneProductHasEmptyName() throws Exception {
+        String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_when_product_has_empty_name.json"), "UTF-8");
+        mockMvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
+                .andExpect(jsonPath("$.errorMessages.size()", is(1)))
+                .andExpect(jsonPath("$.errorMessages[0]", is(PRODUCT_NOT_CORRECT_NAME_MESSAGE+"2")));
+    }
+
+    @Test
+    @DisplayName("Сценарий, когда один элемент в products имеет пустое имя и при этом имеет некорректный код")
+    public void testProductsWhenOneProductHasEmptyNameAndIncorrectCode() throws Exception {
+        String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_when_product_has_empty_name_and_not_corr_code.json"), "UTF-8");
+        mockMvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
+                .andExpect(jsonPath("$.errorMessages.size()", is(2)))
+                .andExpect(jsonPath("$.errorMessages[0]", is(PRODUCT_NOT_CORRECT_CODE_MESSAGE+" №1")))
+                .andExpect(jsonPath("$.errorMessages[1]", is(PRODUCT_NOT_CORRECT_NAME_MESSAGE+"1")));
+    }
+
+    @Test
+    @DisplayName("Сценарии с нарушенной структурой документа")
+    public void testNotCorrectDocument() throws Exception {
+        //Отсутствие seller
+        String requestBody1 = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/badStructure/doc_without_seller.json"), "UTF-8");
+        mockMvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody1))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
+                .andExpect(jsonPath("$.errorMessages.size()", is(1)))
+                .andExpect(jsonPath("$.errorMessages[0]", is(BAD_DOC_MESSAGE)));
+
+        //Отсутствие customer
+        String requestBody2 = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/badStructure/doc_without_customer.json"), "UTF-8");
+        mockMvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody2))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
+                .andExpect(jsonPath("$.errorMessages.size()", is(1)))
+                .andExpect(jsonPath("$.errorMessages[0]", is(BAD_DOC_MESSAGE)));
+
+        //Отсутствие products
+        String requestBody3 = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/badStructure/doc_without_products.json"), "UTF-8");
+        mockMvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody3))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
+                .andExpect(jsonPath("$.errorMessages.size()", is(1)))
+                .andExpect(jsonPath("$.errorMessages[0]", is(BAD_DOC_MESSAGE)));
+
+        //Пустой документ
+        String requestBody4 = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/badStructure/empty_doc.json"), "UTF-8");
+        mockMvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody4))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
+                .andExpect(jsonPath("$.errorMessages.size()", is(1)))
+                .andExpect(jsonPath("$.errorMessages[0]", is(BAD_DOC_MESSAGE)));
+    }
+
+    @Test
+    @DisplayName("Комбинированный сценарий")
+    public void testCombinedScenario() throws Exception {
+        String requestBody = IOUtils.toString(getClass().getResourceAsStream("/testDocuments/doc_very_incorrect.json"), "UTF-8");
+        mockMvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is("VALIDATION_ERROR")))
+                .andExpect(jsonPath("$.errorMessages.size()", is(5)))
+                .andExpect(jsonPath("$.errorMessages[0]", is(WATER_NOT_CORRECT_CODE_MESSAGE)))
+                .andExpect(jsonPath("$.errorMessages[1]", is(PRODUCT_NOT_CORRECT_CODE_MESSAGE+" №1")))
+                .andExpect(jsonPath("$.errorMessages[2]", is(CUSTOMER_NOT_CORRECT_MESSAGE)))
+                .andExpect(jsonPath("$.errorMessages[3]", is(PRODUCT_NOT_CORRECT_NAME_MESSAGE+"1")))
+                .andExpect(jsonPath("$.errorMessages[4]", is(SELLER_NOT_CORRECT_MESSAGE)));
     }
 
 }
