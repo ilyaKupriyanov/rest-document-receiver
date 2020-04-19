@@ -27,7 +27,7 @@ public class DocumentControllerTest {
 
     private MockMvc mockMvc;
 
-    private static final String BASE_URL = "/createDocument";
+    private static final String BASE_URL = "/saveDocument";
     private static final String SELLER_NOT_CORRECT_MESSAGE = "Поле seller должно содержать 9 символов";
     private static final String CUSTOMER_NOT_CORRECT_MESSAGE = "Поле customer должно содержать 9 символов";
     private static final String MILK_NOT_CORRECT_CODE_MESSAGE = "Поле code должно содержать 13 символов для товара milk";

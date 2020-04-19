@@ -32,7 +32,7 @@ public class DocumentController {
         return "Home page";
     }
 
-    @PostMapping(value = "/createDocument", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/saveDocument", consumes = "application/json", produces = "application/json")
     public ResultResponse createDocument(@Valid @RequestBody BusinessDocument businessDocument, Errors errors) {
         ResultResponse resultResponse;
         List<String> errorMessagesList = validationErrorsUtils.checkDocumentForValidationErrors(businessDocument,errors);
