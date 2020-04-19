@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ResultResponse {
 
-    String status;
+    private String status;
 
-    List<String> errorMessages = new ArrayList<>();
+    private List<String> errorMessages = new ArrayList<>();
 
 }

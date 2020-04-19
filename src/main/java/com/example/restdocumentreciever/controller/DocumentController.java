@@ -2,6 +2,8 @@ package com.example.restdocumentreciever.controller;
 
 import com.example.restdocumentreciever.model.BusinessDocument;
 import com.example.restdocumentreciever.model.ResultResponse;
+import com.example.restdocumentreciever.service.DocumentService;
+import com.example.restdocumentreciever.service.DocumentServiceImpl;
 import com.example.restdocumentreciever.utils.ValidationErrorsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -17,11 +19,13 @@ import java.util.List;
 @RestController
 public class DocumentController {
 
+    private DocumentService documentService;
     private ValidationErrorsUtils validationErrorsUtils;
 
     @Autowired
-    public DocumentController(ValidationErrorsUtils validationErrorsUtils) {
+    public DocumentController(ValidationErrorsUtils validationErrorsUtils, DocumentService documentService) {
         this.validationErrorsUtils = validationErrorsUtils;
+        this.documentService = documentService;
     }
 
     @GetMapping("/")
@@ -35,7 +39,9 @@ public class DocumentController {
         List<String> errorMessagesList = validationErrorsUtils.checkDocumentForValidationErrors(businessDocument,errors);
         if (errorMessagesList.isEmpty()) {
             resultResponse = new ResultResponse("SUCCESS", Collections.emptyList());
+            documentService.saveUpdateDocument(businessDocument);
         } else {
+            Collections.sort(errorMessagesList);
             resultResponse = new ResultResponse("VALIDATION_ERROR", errorMessagesList);
         }
         return resultResponse;
